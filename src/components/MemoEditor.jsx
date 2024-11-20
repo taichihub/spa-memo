@@ -18,7 +18,7 @@ const MemoEditor = ({ memo, onSave, onDelete, onCancel }) => {
         onChange={(e) => setContent(e.target.value)}
         rows={constants.textarea.rows}
         cols={constants.textarea.cols}
-        placeholder={labels.editorPlaceholder}
+        placeholder={texts.editorPlaceholder}
       />
       <div>
         <button onClick={handleSave}>{labels.saveButton}</button>
