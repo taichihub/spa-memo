@@ -24,7 +24,7 @@ export const useMemo = () => {
   };
 
   const saveMemo = (memo, setView) => {
-    if (memo.id == null) {
+    if (!memo.id) {
       memo.id = Date.now();
       setMemos((prevMemos) => [...prevMemos, memo]);
     } else {
