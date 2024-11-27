@@ -1,15 +1,16 @@
 import React from "react";
+import { useState } from "react";
+import { useMemo } from "./hooks/useMemo";
 import MemoList from "./components/MemoList";
 import MemoEditor from "./components/MemoEditor";
 import Header from "./components/Header";
-import { useMemo } from "./hooks/useMemo";
-import { useView } from "./hooks/useView";
 import labels from "./locales/labels";
 import constants from "./constants/constants";
 import "./App.css";
 
 const App = () => {
-  const { view, setView, currentMemo, setCurrentMemo } = useView();
+  const [view, setView] = useState(constants.viewType.list);
+  const [currentMemo, setCurrentMemo] = useState(null);
   const { memos, addMemo, saveMemo, deleteMemo } = useMemo();
 
   return (
@@ -18,7 +19,12 @@ const App = () => {
       <main>
         {view === constants.viewType.list && (
           <section>
-            <button onClick={() => addMemo(setCurrentMemo, setView)}>
+            <button
+              onClick={() => {
+                addMemo(setCurrentMemo);
+                setView(constants.viewType.create);
+              }}
+            >
               {labels.newMemoButton}
             </button>
             <MemoList
@@ -36,8 +42,14 @@ const App = () => {
             <section>
               <MemoEditor
                 memo={currentMemo}
-                onSave={(memo) => saveMemo(memo, setView)}
-                onDelete={() => deleteMemo(currentMemo.id, setView)}
+                onSave={(memo) => {
+                  saveMemo(memo);
+                  setView(constants.viewType.list);
+                }}
+                onDelete={() => {
+                  deleteMemo(currentMemo.id);
+                  setView(constants.viewType.list)
+                }}
                 onCancel={() => setView(constants.viewType.list)}
               />
             </section>

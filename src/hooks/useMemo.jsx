@@ -18,12 +18,11 @@ export const useMemo = () => {
     }
   }, [memos]);
 
-  const addMemo = (setCurrentMemo, setView) => {
+  const addMemo = (setCurrentMemo) => {
     setCurrentMemo({ id: null, content: texts.emptyString });
-    setView(constants.viewType.create);
   };
 
-  const saveMemo = (memo, setView) => {
+  const saveMemo = (memo) => {
     if (!memo.id) {
       memo.id = Date.now();
       setMemos((prevMemos) => [...prevMemos, memo]);
@@ -32,13 +31,11 @@ export const useMemo = () => {
         prevMemos.map((m) => (m.id === memo.id ? memo : m)),
       );
     }
-    setView(constants.viewType.list);
   };
 
-  const deleteMemo = (id, setView) => {
+  const deleteMemo = (id) => {
     if (window.confirm(messages.window.confirmDelete)) {
       setMemos((prevMemos) => prevMemos.filter((memo) => memo.id !== id));
-      setView(constants.viewType.list);
     }
   };
 
