@@ -2,15 +2,15 @@ import React from "react";
 import MemoList from "./components/MemoList";
 import MemoEditor from "./components/MemoEditor";
 import Header from "./components/Header";
-import { useMemoManager } from "./hooks/useMemoManager";
-import { useViewManager } from "./hooks/useViewManager";
+import { useMemo } from "./hooks/useMemo";
+import { useView } from "./hooks/useView";
 import labels from "./locales/labels";
 import constants from "./constants/constants";
 import "./App.css";
 
 const App = () => {
-  const { view, setView, currentMemo, setCurrentMemo } = useViewManager();
-  const { memos, addMemo, saveMemo, deleteMemo } = useMemoManager();
+  const { view, setView, currentMemo, setCurrentMemo } = useView();
+  const { memos, addMemo, saveMemo, deleteMemo } = useMemo();
 
   return (
     <div>

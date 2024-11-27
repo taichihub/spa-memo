@@ -4,7 +4,7 @@ import texts from "../locales/texts";
 import messages from "../locales/messages";
 import constants from "../constants/constants";
 
-export const useMemoManager = () => {
+export const useMemo = () => {
   const [memos, setMemos] = useState(() => {
     const savedMemos = localStorage.getItem(constants.localStorageKey);
     return savedMemos ? JSON.parse(savedMemos) : [];
