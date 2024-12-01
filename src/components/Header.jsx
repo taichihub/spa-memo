@@ -5,7 +5,7 @@ import { sessionContext } from "./SessionProvider";
 
 const Header = () => {
   const { session, login, logout } = useContext(sessionContext);
-  
+
   return (
     <header>
       <h1>{texts.appTitle}</h1>

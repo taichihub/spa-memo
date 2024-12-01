@@ -59,7 +59,8 @@ const AppSetUp = () => {
       <Header />
       <main>
         {view === constants.viewType.list && renderMemoList()}
-        {(view === constants.viewType.create || view === constants.viewType.edit) &&
+        {(view === constants.viewType.create ||
+          view === constants.viewType.edit) &&
           currentMemo &&
           renderMemoEditor()}
       </main>
