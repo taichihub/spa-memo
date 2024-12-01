@@ -1,6 +1,7 @@
 const messages = {
   window: {
     confirmDelete: "メモを削除しますか？",
+    LogInToAddMemo: "メモを作成するにはログインしてください",
   },
   log: {
     noMemo: "メモがありません",
