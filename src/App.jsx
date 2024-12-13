@@ -24,45 +24,38 @@ const MainView = () => {
     setView(constants.viewType.create);
   };
 
-  const renderMemoList = () => (
-    <section>
-      <button onClick={handleNewMemo}>{labels.newMemoButton}</button>
-      <MemoList
-        memos={memos}
-        onMemoClick={(memo) => {
-          setCurrentMemo(memo);
-          setView(constants.viewType.edit);
-        }}
-      />
-    </section>
-  );
-
-  const renderMemoEditor = () => (
-    <section>
-      <MemoEditor
-        memo={currentMemo}
-        onSave={(memo) => {
-          saveMemo(memo);
-          setView(constants.viewType.list);
-        }}
-        onDelete={() => {
-          deleteMemo(currentMemo.id);
-          setView(constants.viewType.list);
-        }}
-        onCancel={() => setView(constants.viewType.list)}
-      />
-    </section>
-  );
-
   return (
     <div>
       <Header />
       <main>
-        {view === constants.viewType.list && renderMemoList()}
-        {(view === constants.viewType.create ||
-          view === constants.viewType.edit) &&
-          currentMemo &&
-          renderMemoEditor()}
+        {view === constants.viewType.list && (
+          <section>
+            <button onClick={handleNewMemo}>{labels.newMemoButton}</button>
+            <MemoList
+              memos={memos}
+              onMemoClick={(memo) => {
+                setCurrentMemo(memo);
+                setView(constants.viewType.edit);
+              }}
+            />
+          </section>
+        )}
+        {(view === constants.viewType.create || view === constants.viewType.edit) && currentMemo && (
+          <section>
+            <MemoEditor
+              memo={currentMemo}
+              onSave={(memo) => {
+                saveMemo(memo);
+                setView(constants.viewType.list);
+              }}
+              onDelete={() => {
+                deleteMemo(currentMemo.id);
+                setView(constants.viewType.list);
+              }}
+              onCancel={() => setView(constants.viewType.list)}
+            />
+          </section>
+        )}
       </main>
     </div>
   );
