@@ -9,7 +9,7 @@ import constants from "./constants/constants";
 import SessionProvider, { sessionContext } from "./components/SessionProvider";
 import "./App.css";
 
-const AppSetUp = () => {
+const MainView = () => {
   const [view, setView] = useState(constants.viewType.list);
   const [currentMemo, setCurrentMemo] = useState(null);
   const { memos, addMemo, saveMemo, deleteMemo } = useMemo();
@@ -70,7 +70,7 @@ const AppSetUp = () => {
 
 const App = () => (
   <SessionProvider>
-    <AppSetUp />
+    <MainView />
   </SessionProvider>
 );
 
