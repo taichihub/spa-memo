@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useMemo as useMemoHook } from "./hooks/useMemo";
+import { useMemo } from "./hooks/useMemo";
 import MemoList from "./components/MemoList";
 import MemoEditor from "./components/MemoEditor";
 import Header from "./components/Header";
@@ -12,7 +12,7 @@ import "./App.css";
 const AppSetUp = () => {
   const [view, setView] = useState(constants.viewType.list);
   const [currentMemo, setCurrentMemo] = useState(null);
-  const { memos, addMemo, saveMemo, deleteMemo } = useMemoHook();
+  const { memos, addMemo, saveMemo, deleteMemo } = useMemo();
   const { session } = useContext(sessionContext);
 
   const handleNewMemo = () => {
