@@ -1,17 +1,28 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useMemo } from "./hooks/useMemo";
 import MemoList from "./components/MemoList";
 import MemoEditor from "./components/MemoEditor";
 import Header from "./components/Header";
 import labels from "./locales/labels";
+import messages from "./locales/messages";
 import constants from "./constants/constants";
+import SessionProvider, { sessionContext } from "./components/SessionProvider";
 import "./App.css";
 
-const App = () => {
+const MainView = () => {
   const [view, setView] = useState(constants.viewType.list);
   const [currentMemo, setCurrentMemo] = useState(null);
   const { memos, addMemo, saveMemo, deleteMemo } = useMemo();
+  const { session } = useContext(sessionContext);
+
+  const handleNewMemo = () => {
+    if (session === "logout") {
+      alert(messages.window.LogInToAddMemo);
+      return;
+    }
+    addMemo(setCurrentMemo);
+    setView(constants.viewType.create);
+  };
 
   return (
     <div>
@@ -19,14 +30,7 @@ const App = () => {
       <main>
         {view === constants.viewType.list && (
           <section>
-            <button
-              onClick={() => {
-                addMemo(setCurrentMemo);
-                setView(constants.viewType.create);
-              }}
-            >
-              {labels.newMemoButton}
-            </button>
+            <button onClick={handleNewMemo}>{labels.newMemoButton}</button>
             <MemoList
               memos={memos}
               onMemoClick={(memo) => {
@@ -36,27 +40,31 @@ const App = () => {
             />
           </section>
         )}
-        {(view === constants.viewType.create ||
-          view === constants.viewType.edit) &&
-          currentMemo && (
-            <section>
-              <MemoEditor
-                memo={currentMemo}
-                onSave={(memo) => {
-                  saveMemo(memo);
-                  setView(constants.viewType.list);
-                }}
-                onDelete={() => {
-                  deleteMemo(currentMemo.id);
-                  setView(constants.viewType.list)
-                }}
-                onCancel={() => setView(constants.viewType.list)}
-              />
-            </section>
-          )}
+        {(view === constants.viewType.create || view === constants.viewType.edit) && currentMemo && (
+          <section>
+            <MemoEditor
+              memo={currentMemo}
+              onSave={(memo) => {
+                saveMemo(memo);
+                setView(constants.viewType.list);
+              }}
+              onDelete={() => {
+                deleteMemo(currentMemo.id);
+                setView(constants.viewType.list);
+              }}
+              onCancel={() => setView(constants.viewType.list)}
+            />
+          </section>
+        )}
       </main>
     </div>
   );
 };
+
+const App = () => (
+  <SessionProvider>
+    <MainView />
+  </SessionProvider>
+);
 
 export default App;
